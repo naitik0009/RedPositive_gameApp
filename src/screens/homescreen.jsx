@@ -2,11 +2,13 @@ import { View,TextInput, StyleSheet, Alert } from "react-native";
 import { PrimaryButton } from "../components/home/button.comp";
 import {useState} from 'react';
 export const HomeScreen = ({handle})=>{
+
     const [enteredNumber,setNumber] = useState("");
+    
     function enteredValue(text){
-        setNumber(text);
-       
+        setNumber(text);   
     };
+
     function inputHandler(){
         let chosenNumber = parseInt(enteredNumber);
         if(isNaN(chosenNumber) || chosenNumber <=1 || chosenNumber >=99 ){
@@ -17,6 +19,7 @@ export const HomeScreen = ({handle})=>{
         console.log(enteredNumber);
         handle(enteredNumber);
     };
+    
     return(
     <View style={styles.inputContainer}>
         <View>
@@ -58,6 +61,7 @@ const styles = StyleSheet.create({
         borderBottomColor:'#ddb52f',
         borderBottomWidth:1,
         color:'#ddb52f',
+        fontFamily:"open-sans",
         marginVertical:8,
         fontWeight:'bold',
     },

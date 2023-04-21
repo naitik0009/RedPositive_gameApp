@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily:'open-sans-bold',
     color: '#ddb52f',
     textAlign: 'center',
   },
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   numberText:{
     color:'white',
     fontSize:36,
-    fontWeight:'bold',
+    fontFamily:'open-sans-bold'
 
   }
 });
