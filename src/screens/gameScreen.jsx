@@ -22,7 +22,7 @@ useEffect(()=>{
 
   if(currentGuess.toString() === userNumber.toString()){
     console.log("game over")
-    onGameOver();
+    onGameOver(guessRound.length);
   }
 
 },[currentGuess,userNumber,onGameOver]);
