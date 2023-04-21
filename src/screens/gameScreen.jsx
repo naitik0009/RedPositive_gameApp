@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import {Text, SafeAreaView, StyleSheet, View, Alert} from 'react-native';
+import {Text, SafeAreaView, StyleSheet, View, Alert, FlatList} from 'react-native';
+import { GameLogItem } from '../components/gameScreen/gameLog.comp';
 import { PrimaryButton } from '../components/home/button.comp';
 
 const generateRandomBetween = (min, max, exclude) => {
@@ -15,9 +16,10 @@ let maxBoundary = 100;
 export const GameScreen = ({userNumber,onGameOver}) => {
 const initialGuess = generateRandomBetween(1,100,userNumber);
 const [currentGuess,setGuess] = useState(initialGuess);
-
+const [guessRound,setGuessRound] = useState([initialGuess]);
 useEffect(()=>{
   console.log(userNumber,currentGuess);
+
   if(currentGuess.toString() === userNumber.toString()){
     console.log("game over")
     onGameOver();
@@ -35,11 +37,13 @@ const nextGuessHandler=(direction)=>{
     maxBoundary = currentGuess ;
     let newRandom = generateRandomBetween(minBoundary,maxBoundary,currentGuess);
     setGuess(newRandom);
+    setGuessRound(previous=>[...previous,newRandom]);
   }
   if(direction === 'higher'){
     minBoundary = currentGuess + 1;
     let newRandom = generateRandomBetween(minBoundary,maxBoundary,currentGuess);
     setGuess(newRandom);
+    setGuessRound(previous=>[...previous,newRandom]);
   }
 
 };
@@ -51,12 +55,12 @@ const nextGuessHandler=(direction)=>{
         <View style={styles.numberContainer}>
         <Text style={styles.numberText}>{currentGuess}</Text>
         </View>
-        <View>
+        <View style={styles.button}>
           <PrimaryButton onPress={nextGuessHandler.bind(this,'higher')}>+</PrimaryButton>
           <PrimaryButton onPress={nextGuessHandler.bind(this,'lower')}>-</PrimaryButton>
         </View>
       </View>
-      <View>{/**Higher or Lower + - */}</View>
+      <View style={styles.flat}><FlatList data={guessRound} renderItem={(item)=><GameLogItem round={item.index+1} guess={item.item}/>}/></View>
     </SafeAreaView>
   );
 };
@@ -86,5 +90,18 @@ const styles = StyleSheet.create({
     fontSize:36,
     fontFamily:'open-sans-bold'
 
+  },
+  flat:{
+    padding:10,
+  },
+  button:{
+    width:'100%',
+    height:200,
+    borderWidth:1,
+
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    marginHorizontal:80,
   }
 });

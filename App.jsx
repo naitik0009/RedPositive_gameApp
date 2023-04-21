@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 function App() {
   const [number,setNumber] = useState(null);
   const [gameIsOver,setGame] = useState(true);  
+  const [guessRound,setGuess] = useState(0);
   let screen = <HomeScreen handle={handleScreen}/>;
 
   function handleScreen(num){
@@ -16,11 +17,15 @@ function App() {
   function gameIsOverHandler(){
     setGame(true);
   }
+  function startNewGame(){
+    setGuess(0);
+    setNumber(null);
+  }
   if(number){
     screen = <GameScreen userNumber={number} onGameOver={gameIsOverHandler}/>
   }
   if(gameIsOver && number){
-    screen = <GameOverScreen handleGame={setGame} handleNumber={setNumber} />
+    screen = <GameOverScreen roundNumber={guessRound} userNumber={number} startNewGame={startNewGame} />
   }
   return (
   <LinearGradient colors={['#4e0329','#ddb53f']} style={styles.container}>
